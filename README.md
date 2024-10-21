@@ -13,7 +13,7 @@ Este proyecto es una API básica para gestionar usuarios y bootcamps. Permite re
 1. Clona este repositorio:
 
 ```bash
-git clone https://github.com/usuario/nombre-repo.git
+git clone https://github.com/usuario/Kodigo-api.git
 ```
 
 2. Navega al directorio del proyecto:
