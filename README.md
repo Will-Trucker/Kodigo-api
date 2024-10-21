@@ -44,11 +44,9 @@ El servidor estará corriendo en http://localhost:5000.
 
 Este documento describe los endpoints disponibles en la API para gestionar usuarios y bootcamps.
 
-## - **Autenticación**
-
 ### Registro de nuevo usuario
 
-- **URL****: `/register`
+- **URL**: `/api/auth/register`
 - **Metodo**: `POST`
 - **Descripción****: Crea un nuevo usuario en el sistema.
 - ** - ** Body ****:
@@ -62,8 +60,8 @@ Este documento describe los endpoints disponibles en la API para gestionar usuar
 400: El usuario ya existe.
 
 ## **Inicio de sesión**
-- **URL****: /login
-- **Metodo**: POST
+- **URL****: `/api/auth//login`
+- **Metodo**: `POST`
 - **Descripción**: Permite a un usuario autenticarse.
 - ** Body **:
 ```json
@@ -77,26 +75,44 @@ Este documento describe los endpoints disponibles en la API para gestionar usuar
 200: Devuelve un token de Autenticación.
 400: Credenciales inválidas.
 
+## - **Autenticación**
+
+## Middleware de Autenticación
+** Verificar token de autenticación ** 
+- **URL**: `/api/auth/dashboard`
+- **Método**: `GET` Middleware (llamado en cada endpoint protegido)
+- **Descripción**: Verifica si el token de autenticación (JWT) es válido. Se debe enviar el token en el header de la solicitud.
+- **Header**:
+```json
+{
+  "Authorization": "Bearer <token>"
+}
+```
+Respuestas:
+403: Token requerido (si no se envía el token).
+401: Token inválido (si el token no es válido o ha expirado).
+200: Autenticación exitosa, devuelve un objeto userLogin.
+
 ## ** BOOTCAMPS **
 
 ## Obtener todos los bootcamps
-- **URL**: /bootcamps/all
-- **- **Metodo****: GET
+- **URL**: `/api/auth/bootcamps/all`
+- **Metodo**: `GET`
 - **Autenticación**: Bearer Token
 - **Descripción**: Devuelve una lista de todos los bootcamps.
 - Respuestas:
 200: Devuelve un array de bootcamps.
 
 ## Crear un nuevo bootcamp
-- **URL**: /bootcamps/create
-- **- **Metodo****: POST
+- **URL**: `/api/auth/bootcamps/create`
+- **- **Metodo****: `POST`
 - **Autenticación**: Bearer Token
 - **Descripción**: Crea un nuevo bootcamp.
  - ** Body **:
 ```json
 {
   "name": "nombre",
-  "description": "- **Descripción**",
+  "description": "Descripción",
   "technologies": ["tecnología1", "tecnología2"]
 }
 ```
@@ -105,15 +121,15 @@ Este documento describe los endpoints disponibles en la API para gestionar usuar
 200: El bootcamp ya existe y se activo correctamente.
 
 ## Actualizar un bootcamp
-- **URL**: /bootcamps/update/:id
-- **Metodo**: PUT
+- **URL**: `/api/auth/bootcamps/update/:id`
+- **Metodo**: `PUT`
 - **Autenticación**: Bearer Token
 - **Descripción**: Actualiza un bootcamp existente por su ID.
- - ** Body **:
+- ** Body **:
 ```json
 {
   "name": "nuevo nombre",
-  "description": "nueva - **Descripción**",
+  "description": "nueva Descripción",
   "technologies": ["nueva tecnología"]
 }
 ```
@@ -122,8 +138,8 @@ Este documento describe los endpoints disponibles en la API para gestionar usuar
 404: Bootcamp no encontrado.
 
 ## Desactivar un bootcamp (Soft Delete)
-- **URL**: /bootcamps/delete/:id
-- **Metodo**: DELETE
+- **URL**: `/api/auth/bootcamps/delete/:id`
+- **Metodo**: `DELETE`
 - **Autenticación**: Bearer Token
 - **Descripción**: Desactiva un bootcamp por su ID (no lo borra permanentemente).
 - Respuestas:
