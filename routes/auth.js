@@ -108,8 +108,19 @@ router.post('/bootcamps/create', verifyToken, (req, res) => {
 
     let bootcamps = readBootcampsFromFile();
 
-    if (bootcamps.find(bootcamp => bootcamp.name === name)) {
-        return res.status(400).json({ message: 'El bootcamp ya existe' });
+    let existingBootcamp = bootcamps.find(bootcamp => bootcamp.name === name);
+
+    if (existingBootcamp) {
+        if (!existingBootcamp.active) {
+            existingBootcamp.active = true;
+            existingBootcamp.description = description;
+            existingBootcamp.technologies = technologies;
+
+            saveBootcampsToFile(bootcamps);
+            return res.json({ message: 'Bootcamp reactivado y actualizado correctamente', bootcamp: existingBootcamp });
+        } else {
+            return res.status(400).json({ message: 'El bootcamp ya existe y está activo' });
+        }
     }
 
     const newBootcamp = {id: bootcamps.length + 1, name, description, technologies, active: true};
