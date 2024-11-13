@@ -31,5 +31,18 @@
       "R"
     ],
     "active": true
+  },
+  {
+    "id": 4,
+    "name": "Full Stack",
+    "description": "Full Stack Dev",
+    "technologies": [
+      "Laravel",
+      "React",
+      "Angular",
+      "Node.js",
+      "Vue.js"
+    ],
+    "active": false
   }
 ]
